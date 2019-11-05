@@ -1,6 +1,6 @@
 import React from 'react'
 
-class Default extendes React.Component {
+class Default extends React.Component {
 
   render(){
     return (

@@ -6,21 +6,45 @@ import Navbar from './components/Navbar'
 import ProductList from './components/ProductList'
 import Details from './components/Details'
 import Cart from './components/Cart'
-import Default from './components/Navbar'
+import Default from './components/Default'
+import { storeProducts , detailProduct } from './data'
 
 
-function App() {
-  return (
-      <>
-        <Navbar/>
-        <Switch>
-          <Route exact path='/' component={ProductList}/>
-          <Route path='/details' component={Details}/>
-          <Route path='/cart' component={Cart}/>
-          <Route component={Default} />
-        </Switch >
-      </>
-  )
+export default class App extends React.Component {
+
+  state = {
+    products: [],
+    detailProduct: null
+  }
+
+  // selected product to be displayed
+  handleDetail = () => {
+    console.log('More Details')
+    // this.setState({detailProduct})
+  }
+
+  addToCart = () => {
+    console.log('Add To Cart')
+    // this.setState({detailProduct})
+  }
+
+  render(){
+    return (
+        <div>
+          <Navbar/>
+          <Switch>
+            <Route exact path='/' render={(props) => <ProductList {...props} products={this.state.products} handleDetail={this.handleDetail} addToCart={this.addToCart}/>}/>
+            <Route path='/details' render={(props) => <Details {...props}/>}/>
+            <Route path='/cart' render={(props) => <Cart {...props}/>}/>
+            <Route component={Default}/>
+          </Switch >
+        </div>
+    )
+  }
+
+  // Perform FETCH from the DATABASE
+  componentDidMount(){
+    this.setState({products: storeProducts})
+  }
+
 }
-
-export default App;
